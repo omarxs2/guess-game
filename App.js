@@ -9,6 +9,8 @@ import GameOverScreen from './screens/GameOverScreen';
 
 import Colors from './util/colors';
 
+import { StatusBar } from 'expo-status-bar';
+
 // import { useFonts } from 'expo-font';
 // const [fontLoaded] = useFonts({
 //   'open-sens': require('./assets/fonts/OpenSans-Regular.ttf'),
@@ -45,20 +47,24 @@ export default function App() {
   }
 
   return (
-    <LinearGradient colors={['#535151', Colors.secondary]} style={styles.rootScreen}>
-      <ImageBackground
-        source={require('./assets/images/dices.jpg')}
-        resizeMode='cover'
-        style={styles.rootScreen}
-        imageStyle={{ opacity: 0.35 }}
-      >
-        <SafeAreaView style={styles.rootScreen}>
-          {screen}
-        </SafeAreaView>
-      </ImageBackground>
-    </LinearGradient>
+    <>
+      <StatusBar style='dark' />
+      <LinearGradient colors={['#535151', Colors.secondary]} style={styles.rootScreen}>
+        <ImageBackground
+          source={require('./assets/images/dices.jpg')}
+          resizeMode='cover'
+          style={styles.rootScreen}
+          imageStyle={{ opacity: 0.35 }}
+        >
+          <SafeAreaView style={styles.rootScreen}>
+            {screen}
+          </SafeAreaView>
+        </ImageBackground>
+      </LinearGradient>
+    </>
+
   );
-} ``
+} 
 
 const styles = StyleSheet.create({
   rootScreen: {

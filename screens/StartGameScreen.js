@@ -1,11 +1,24 @@
-import { StyleSheet, Alert, View, Text, TextInput } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
 import { useState } from 'react'
 import Colors from '../util/colors';
+import PrimaryButton from '../components/PrimaryButton';
+import {
+    StyleSheet,
+    Alert,
+    View,
+    Text,
+    TextInput,
+    Dimensions,
+    useWindowDimensions,
+    KeyboardAvoidingView,
+    ScrollView,
+    Platform
+} from 'react-native';
+
 
 function StartGameScreen({ onConfirm }) {
 
     const [enteredNumber, setEnteredNumber] = useState('');
+    const { width, height } = useWindowDimensions();
 
     const numberInputHandler = (value) => {
         setEnteredNumber(value);
@@ -27,46 +40,55 @@ function StartGameScreen({ onConfirm }) {
 
     }
 
-    return (
-        <View style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Guess My Number !!</Text>
+    const marginTopDist = height < 400 ? 10 : 100;
 
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.header}>Pick a number:</Text>
-                <TextInput style={styles.numberInput}
-                    maxLength={2}
-                    keyboardType='number-pad'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    onChangeText={numberInputHandler}
-                    value={enteredNumber}
-                />
-                <View style={styles.buttonsContainer}>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+    return (
+        <ScrollView style={[styles.screen, { marginBottom: 50 }]}>
+            <KeyboardAvoidingView style={styles.screen} behavior='height'>
+                <View style={[styles.mainContainer, { marginTop: marginTopDist }]}>
+                    <View style={styles.titleContainer}>
+                        <Text style={[styles.title, { width: width * 0.6 }]}>Guess My Number !!</Text>
+
                     </View>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.header}>Pick a number:</Text>
+                        <TextInput style={styles.numberInput}
+                            maxLength={2}
+                            keyboardType='number-pad'
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            onChangeText={numberInputHandler}
+                            value={enteredNumber}
+                        />
+                        <View style={styles.buttonsContainer}>
+                            <View style={styles.buttonContainer}>
+                                <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+                            </View>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </View>
-
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 }
 
 export default StartGameScreen;
 
+const deviceWidth = Dimensions.get('window').width
+const deviceHeight = Dimensions.get('window').height
+
 const styles = StyleSheet.create({
+    screen: { flex: 1 },
     mainContainer: {
         flex: 1,
         alignItems: 'center',
     },
     titleContainer: {
-        padding: 16,
-        borderColor: Colors.secondary,
+        padding: 8,
+        borderColor: Platform.select({ ios: Colors.secondary, android: Colors.primaryDark }),
         borderRadius: 8,
         borderWidth: 4,
         margin: 10,
@@ -75,8 +97,8 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 32,
         fontWeight: 'bold',
-        color: Colors.secondary,
-
+        color: Platform.OS == 'android' ? Colors.primaryDark : Colors.secondary,
+        textAlign: 'center'
     },
     inputContainer: {
         justifyContent: 'center',

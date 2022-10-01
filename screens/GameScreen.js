@@ -90,9 +90,7 @@ function GameScreen({ userNumber, gameOverHandler }) {
             </View>
 
             <View style={styles.flatList}>
-
                 <FlatList
-
                     data={guessRounds}
                     renderItem={(itemData) => (
                         <View style={styles.round}>
@@ -102,7 +100,6 @@ function GameScreen({ userNumber, gameOverHandler }) {
                     )}
                     keyExtractor={(item) => item}
                 />
-
             </View>
         </View >
     );
@@ -115,9 +112,7 @@ const styles = StyleSheet.create({
     screen: {
         flex:1,
         alignItems: 'center',
-        padding: 16,
         marginHorizontal: 20,
-        borderRadius: 8,
         elevation: 1, //android specific concept
         shadowColor: '#414040',
         shadowOffset: { width: 5, height: 5 },
@@ -130,7 +125,7 @@ const styles = StyleSheet.create({
     },
     round: {
         flexDirection: 'row',
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         backgroundColor: Colors.secondary,
         borderWidth: 1,
         borderColor: Colors.primaryDark,
